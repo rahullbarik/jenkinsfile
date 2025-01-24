@@ -4,13 +4,13 @@ pipeline {
     stages {
         stage('num') {
             steps {
-               echo " enter a number "
-               read num
-               echo " multiplication table of $num "
-               for ((i=1;i<=10;i++))
+               echo " Enter a two value of range "
+               read a
+               read b
+               while [ $a -le $b ]
                do
-                    result=$((num * i))
-                    echo "$num * $i = $result"
+                     echo $a
+                     a=$((a+1))
                done
             }
         }
