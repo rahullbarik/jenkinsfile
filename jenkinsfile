@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('code') {
+        stage('num') {
             steps {
                echo " enter a number "
                read num
