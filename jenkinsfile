@@ -2,16 +2,20 @@ pipeline {
     agent any
 
     stages {
-        stage('num') {
+        stage('Number Range') {
             steps {
-               echo " Enter a two value of range "
-               read a
-               read b
-               while '(' a -le b ')'
-               do
-                     echo $a
-                     a=((a+1))
-               done
+                script {
+                    sh '''
+                    echo "Enter the starting value of the range:"
+                    read a
+                    echo "Enter the ending value of the range:"
+                    read b
+                    while [ $a -le $b ]; do
+                        echo $a
+                        a=$((a+1))
+                    done
+                    '''
+                }
             }
         }
     }
