@@ -5,7 +5,8 @@ pipeline {
         stage('Number Range') {
             steps {
                 script {
-                    sh echo "Enter the starting value of the range:"
+                    sh '''
+                    echo "Enter the starting value of the range:"
                     read a
                     echo "Enter the ending value of the range:"
                     read b
@@ -14,6 +15,7 @@ pipeline {
                         echo $a
                         a=$((a+1))
                     done
+                    '''
                 }
             }
         }
