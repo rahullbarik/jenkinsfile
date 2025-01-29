@@ -1,19 +1,16 @@
 pipeline {
-    agent any
-
-    stages {
-        stage('Print Even Numbers') {
-            steps {
-                script {
-                    def i = 20
-                    while (i <= 50) {
-                        if (i % 2 == 0) {
-                            echo "${i}"
-                        }
-                        i++
-                    }
-                }
-            }
+   agent any
+   stages {
+     stage ('code') {
+        steps {
+           git branch:'version1.2',url:'https://github.com/rahullbarik/web-apps.git'
         }
-    }
-}
+     } 
+     stage('build') {
+        steps {
+           sh "mvn clean package"
+        }
+     }
+     stage('deploy') {
+        steps {
+           
