@@ -1,21 +1,26 @@
 pipeline {
-   agent{
-      label 'slave'
-   }
+ agent any
    stages {
-     stage ('code') {
+     stage('code') {
         steps {
            git branch:'master',url:'https://github.com/rahullbarik/web-apps.git'
         }
      } 
      stage('build') {
         steps {
-           sh "mvn clean package"
+           sh "mvn clean package"  // Builds the WAR file
         }
      }
-     stage('deploy') {
+     stage('Docker Build') {
         steps {
-          deploy adapters: [tomcat9(credentialsId: '4bcbc10a-1224-4737-a0de-060d6828dd00', path: '', url: 'http://98.81.246.44:8080')], contextPath: 'tomcat2', onFailure: false, war: 'target/*.war'
+          sh 'docker build -t tomcatimg .'
+        }
+     }
+     stage('Deploy') {
+        steps {
+          sh 'docker stop tomcat-container || true'
+          sh 'docker rm tomcat-container || true'
+          sh 'docker run -d -p 8081:8080 --name tomcat-container tomcatting'
         }
      }
    }
